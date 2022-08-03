@@ -29,8 +29,14 @@ export class UsersService {
             console.log(e)
         }
     }
-    async update(){
-        
-    }
-}
+    async update(_id:string,attrs:Partial<User>){
+        try{ 
+            return await this.userModel.findByIdAndUpdate(_id,attrs);
 
+        }catch(e)
+        {
+            console.log(e);
+            
+        }
+}
+}
