@@ -29,7 +29,7 @@ export class UsersService {
     async findUser(_id:string){
         try{
             return await this.userModel.findById({_id});
-
+            
 
         }catch(e){
             console.log(e)
