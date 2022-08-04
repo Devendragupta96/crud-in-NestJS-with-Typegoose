@@ -20,6 +20,12 @@ export class UsersController {
         return await this.usersService.findAll();
     }
 
+    @Get('/:_id')
+    async findUser(@Param('_id') _id: string) {
+        return await this.usersService.findUser(_id);
+    }
+
+
     @Delete('/:_id')
     removerUser(@Param('_id') _id: string) {
         return this.usersService.remove(_id);

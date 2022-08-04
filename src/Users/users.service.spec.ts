@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { getModelToken } from 'nestjs-typegoose';
 import { UsersController } from './users.controller';
 import { User } from './users.model';
@@ -12,10 +12,12 @@ afterAll(async () => {
 
 describe('UserService', () => {
   let service: UsersService;
+  let model:Model<User>;
   const fakeModel = jest.fn();
   beforeEach(async () => {
 
     const module: TestingModule = await Test.createTestingModule({
+      
       providers: [UsersService, {
         provide: getModelToken('User'),
         useValue: fakeModel,
@@ -26,19 +28,26 @@ describe('UserService', () => {
     }).compile();
 
     service = module.get<UsersService>(UsersService);
+    //model=module.get<User>(User);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-  it('should get the user create', async () => {
-    const user = {
+  it('should get the user', async () => {
+    let user = {
       email: 'sample@abc.com',
       password: 'abc'
     }
-    const result = await service.create(user);
+    
+    let result = await service.create(user);
     console.log(result);
     
     expect(result).toBeTruthy();
-  })
+    
+  });
+  it('should get user detail by id',async ()=>{
+    const result=await service.findUser('62eaba6b78e3f761a96ca4e7');
+    expect(result).toBeDefined();
+  });
 });

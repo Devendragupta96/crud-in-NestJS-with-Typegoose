@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './users.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { ReturnModelType } from '@typegoose/typegoose';
+import { mongoose, ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
 export class UsersService {
@@ -14,9 +14,8 @@ export class UsersService {
     async create(user: {email:string,password:string}):Promise<any>{
         try{
             const newUser=new this.userModel(user);
-            console.log(newUser);
-            
-            return await newUser.save();
+            //console.log(newUser);
+            return newUser.save();
         }catch(e)
         {
             console.log(e);
@@ -26,6 +25,15 @@ export class UsersService {
 
     async findAll():Promise<User[]|null>{
         return await this.userModel.find().exec();
+    }
+    async findUser(_id:string){
+        try{
+            return await this.userModel.findById({_id});
+
+
+        }catch(e){
+            console.log(e)
+        }
     }
 
     async remove(_id:string) {
