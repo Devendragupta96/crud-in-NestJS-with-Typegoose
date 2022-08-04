@@ -46,16 +46,16 @@ describe('UserService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-  // it('should get the user create', async () => {
-  //   const user = {
-  //     email: 'sample@abc.com',
-  //     password: 'abc'
-  //   }
-  //   const result = await service.create(user);
-  //   console.log(result);
+  it('should get the user create', async () => {
+    const user = {
+      email: 'sample@abc.com',
+      password: 'abc'
+    }
+    const result = await service.create(user);
+    console.log(result);
     
-  //   expect(result).toBeTruthy();
-  // });
+    expect(result).toBeTruthy();
+  });
   it('should get user detail by id',async ()=>{
     const result=await service.findUser('62eaba6b78e3f761a96ca4e7');
     expect(result).toBeDefined();
