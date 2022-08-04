@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from './users.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -12,8 +12,16 @@ export class UsersService {
     ){}
 
     async create(user: {email:string,password:string}):Promise<any>{
-        const newUser=new this.userModel(user);
-        return await newUser.save();
+        try{
+            const newUser=new this.userModel(user);
+            console.log(newUser);
+            
+            return await newUser.save();
+        }catch(e)
+        {
+            console.log(e);
+            
+        }
     }
 
     async findAll():Promise<User[]|null>{
