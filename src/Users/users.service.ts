@@ -13,9 +13,13 @@ export class UsersService {
 
     async create(user: {email:string,password:string}):Promise<any>{
         try{
-            const newUser=new this.userModel(user);
+            //const newUser=new this.userModel(user);
             //console.log(newUser);
-            return newUser.save();
+            const newUser= new this.userModel(user);
+            console.log(newUser);
+            
+            return newUser;
+            //return user.save();
         }catch(e)
         {
             console.log(e);

@@ -34,15 +34,13 @@ describe('UserService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-  it('should get the user', async () => {
+  it('should create the user', async () => {
     let user = {
       email: 'sample@abc.com',
       password: 'abc'
     }
     
     let result = await service.create(user);
-    console.log(result);
-    
     expect(result).toBeTruthy();
     
   });

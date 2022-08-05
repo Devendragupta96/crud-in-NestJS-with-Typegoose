@@ -52,6 +52,7 @@ describe('UserService', () => {
       password: 'abc'
     }
     const result = await service.create(user);
+    await result.save();
     console.log(result);
     
     expect(result).toBeTruthy();
