@@ -6,26 +6,26 @@ import { UsersController } from './users.controller';
 import { User } from './users.model';
 import { UsersService } from './users.service';
 import { jest} from '@jest/globals';
-let mongod: MongoMemoryServer;
-afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoose.disconnect();
-});
+// let mongod: MongoMemoryServer;
+// afterAll(async () => {
+//   await mongoose.connection.close();
+//   await mongoose.disconnect();
+// });
 
 describe('UserService', () => {
   let service: UsersService;
 
-  let model:Model<User>;
+  //let model:Model<User>;
   const fakeModel = jest.fn();
   beforeEach(async () => {
-    mongod = await MongoMemoryServer.create();
+    //mongod = await MongoMemoryServer.create();
     const module: TestingModule = await Test.createTestingModule({
-      imports:[TypegooseModule.forRootAsync({
-                  useFactory: async () => ({
-                    uri: await mongod.getUri(),
-                  }),
-                }),
-        ],
+      // imports:[TypegooseModule.forRootAsync({
+      //             useFactory: async () => ({
+      //               uri: await mongod.getUri(),
+      //             }),
+      //           }),
+      //   ],
       providers: [UsersService, {
         provide: getModelToken('User'),
         useValue: fakeModel,       //User
