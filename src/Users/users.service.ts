@@ -28,12 +28,16 @@ export class UsersService {
     }
 
     async findAll():Promise<User[]|null>{
-        return await this.userModel.find().exec();
+        const result= await this.userModel.find().exec();
+        return result;
     }
     async findUser(_id:string){
         try{
-            return await this.userModel.findById({_id});
-            
+            const result= await this.userModel.findById(_id);
+            return {
+                ok:true,
+                result
+            }
 
         }catch(e){
             console.log(e)
