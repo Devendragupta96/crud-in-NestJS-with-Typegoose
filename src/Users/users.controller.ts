@@ -11,13 +11,13 @@ export class UsersController {
 
     @Post('/create')
     async create(@Body() user: User): Promise<User> {
-        const result= await this.usersService.create(user);
-        result.save();
+        const result = await this.usersService.create(user);
+        //result.save();
         return result;
     }
 
     @Get()
-    async getUser(): Promise<User[] | null> {
+    async getUser(): Promise<any> {
         return await this.usersService.findAll();
     }
 
