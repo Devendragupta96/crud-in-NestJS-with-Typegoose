@@ -1,0 +1,41 @@
+version: '3.3'
+
+services:
+    dev:
+        container_name: crud_api_dev
+        image: crud-api-dev:1.0.0
+        build:
+            context: .
+            #target: development
+            dockerfile: ./Dockerfile
+        command: npm run start:debug
+        ports:
+            - 3000:3000
+            #- 9229:9229
+        # networks:
+        #     - crud-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+    prod:
+        container_name: crud_api_prod
+        image: crud-api-prod:1.0.0
+        build:
+            context: .
+            #target: production
+            dockerfile: ./Dockerfile
+        command: npm run start:prod
+        ports:
+            - 3000:3000
+            #- 9229:9229
+        # networks:
+        #     - crud-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+            
+        restart: unless-stopped
+
+# networks:
+#     nesjs-network:
