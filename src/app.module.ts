@@ -3,12 +3,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { UsersModule } from './Users/users.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 
 
 @Module({
-  imports: [
-    TypegooseModule.forRoot("mongodb+srv://Devendra:devendra@cluster0.jysvm.mongodb.net/test?retryWrites=true&w=majority"),
+  imports: [ConfigModule.forRoot({
+    envFilePath: '.env',
+    }),
+    TypegooseModule.forRoot(process.env.MONGO_URI),
      //TypegooseModule.forRoot("mongodb://localhost:27017"),
     UsersModule
   ],
