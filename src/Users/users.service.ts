@@ -11,18 +11,17 @@ export class UsersService {
         @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>
     ) { }
 
-    async create(user: { email: string, password: string }): Promise<any> {
+    async create(user: Partial<User>): Promise<any> {
         try {
-            //const newUser=new this.userModel(user);
+            const newUser=new this.userModel(user);
             //console.log(newUser);
-            const newUser = (await this.userModel.create(user));
+            //const newUser = (await this.userModel.create(user));///try with model function and save
             // console.log(newUser);
-            // (await newUser).save();
-            return {
-                ok: true,
-                newUser
-            }
-            //return newUser.save();
+            // const res= newUser.save();
+            // return {
+            //     ok:true,
+            //     newUser}
+            return newUser.save();
         } catch (e) {
             console.log(e);
 
@@ -31,18 +30,12 @@ export class UsersService {
 
     async findAll() {
         const result = await this.userModel.find();
-        return {
-            ok: true,
-            result
-        }
+        return result;
     }
     async findUser(_id: string) {
         try {
             const result = await this.userModel.findById(_id);
-            return {
-                ok: true,
-                result
-            }
+            return result;
 
         } catch (e) {
             console.log(e)
@@ -52,10 +45,7 @@ export class UsersService {
     async remove(_id: string) {
         try {
             const result = await this.userModel.findByIdAndDelete(_id);
-            return {
-                ok: true,
-                result
-            }
+            return result;
 
         } catch (e) {
             console.log(e)
@@ -64,10 +54,7 @@ export class UsersService {
     async update(_id: string, attrs: Partial<User>) {
         try {
             const result = await this.userModel.findByIdAndUpdate(_id, attrs);
-            return {
-                ok: true,
-                result
-            }
+            return result;
         } catch (e) {
             console.log(e);
 

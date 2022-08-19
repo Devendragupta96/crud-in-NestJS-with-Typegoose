@@ -1,5 +1,5 @@
 import { modelOptions, mongoose, prop} from '@typegoose/typegoose';
-
+import { IsEmail } from 'class-validator';
 @modelOptions({
     schemaOptions:{
         timestamps: true,
@@ -12,7 +12,8 @@ export class User{
     @prop({
         type: String,
         required: true,
-        unique:true
+        unique:true,
+        validate:[IsEmail,'invalid email']
     })
     email:string
 
