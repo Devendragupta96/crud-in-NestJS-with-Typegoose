@@ -9,6 +9,10 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
+    @Get('/aggregate')
+    async aggregate(){
+        return this.usersService.aggregate();
+    }
     @Post('/create')
     async create(@Body() user: User): Promise<User> {
         const result = await this.usersService.create(user);
@@ -36,4 +40,5 @@ export class UsersController {
     UpdateUser(@Param('_id') _id: string, @Body() body: UpdateUserDto) {
         return this.usersService.update(_id, body);
     }
+    
 }

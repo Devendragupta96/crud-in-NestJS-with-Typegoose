@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './users.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { mongoose, ReturnModelType } from '@typegoose/typegoose';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { UpdateUserDto } from './update.dto';
 
 @Injectable()
 export class UsersService {
-    findOneBy: any;
-    findOne: any;
+    // findOneBy: any;
+    // findOne: any;
     constructor(
         @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>
     ) { }
@@ -34,7 +35,7 @@ export class UsersService {
     }
     async findUser(_id: string) {
         try {
-            const result = await this.userModel.findById(_id);
+            const result = await this.userModel.findOne({_id});
             return result;
 
         } catch (e) {
@@ -51,7 +52,7 @@ export class UsersService {
             console.log(e)
         }
     }
-    async update(_id: string, attrs: Partial<User>) {
+    async update(_id: string, attrs: Partial<UpdateUserDto>) {
         try {
             const result = await this.userModel.findByIdAndUpdate(_id, attrs);
             return result;
@@ -60,4 +61,28 @@ export class UsersService {
 
         }
     }
+    async aggregate(){
+        try{
+            const result=await this.userModel.aggregate([
+                {
+                    $match:{ age:{$gte:30,$lte:50} }
+                },
+                {
+                    $project:{
+                        name:"$name",
+                        email:"$email",
+                        age:"$age" ,
+                    }
+                },
+                {
+                    $sort:{ age:-1}
+                }
+            ]);
+         
+            return result;
+        }catch(err){
+            console.log(err);
+            
+        }   
+     }
 }

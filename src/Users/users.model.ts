@@ -22,4 +22,16 @@ export class User{
         required:true,
     })
     password:string
+
+    @prop({
+        type: String,
+        required:true,
+    })
+    name:string
+
+    @prop({
+        type: Number,
+        required:true,
+    })
+    age:number
 }

@@ -8,6 +8,7 @@ import { AppModule } from '../app.module';
 import { UsersModule } from './users.module';
 let mongod: MongoMemoryServer;
 //let module: TestingModule;
+let id;
 
 describe('UserService', () => {
   let service: UsersService;
@@ -62,19 +63,24 @@ describe('UserService', () => {
   });
   it('should create the user', async () => {
     let user = {
-     email: 'sampleabc1263@gmail.com',
-      password: 'abc'
+      email: 'sampleabc1263@gmail.com',
+      password: 'abc',
+      name:"abc",
+      age:60,
     }
 
     let result = await service.create(user);
+    id=result._id;
     console.log(result);
+    console.log(typeof id);
+    
 
     expect(result).toBeDefined();
     expect(result.password ).toBe("abc");
 
   });
   it('should get user detail by id', async () => {
-    const result = await service.findUser('62eb591aa9b9f19d6cf0caa2');
+    const result = await service.findUser(id);
     console.log(result);
     
     expect(result).toBeDefined();
@@ -89,15 +95,23 @@ describe('UserService', () => {
   it('should update the users', async () => {
     let user = {
       email: 'sample11@abc.com',
-      password: 'abc'
+      password: 'abc',
+      name:"abc",
+      age:12
     }
-    const result = await service.update('62eaba6b78e3f761a96ca4e7', user);
+    const result = await service.update(id, user);
     console.log(result);
 
     expect(result).toBeDefined();
   });
+  it('should get user detail by aggregation', async () => {
+    const result = await service.aggregate();
+    console.log(result);
+    
+    expect(result).toBeDefined();
+  });
   it('should delete the users', async () => {
-    const result = await service.remove('62eaba6b78e3f761a96ca4e7');
+    const result = await service.remove(id);
 
     console.log(result);
     
@@ -109,11 +123,12 @@ describe('UserService', () => {
   //     password: 'abc'
   //   }
 
-    let result = await service.findUser('62eaba6b78e3f761a96ca4e7');
+    let result = await service.findUser(id);
     console.log(result);
 
     expect(result).toBeNull();
     expect(result).toBeFalsy();
 
   });
+  
 });
